@@ -1,0 +1,63 @@
+{% load static %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ title }}</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg bg-dark bg-body-tertiary" data-bs-theme="dark">
+            <div class="container-fluid" >
+            <a class="navbar-brand" href="{% url 'list_products' %}">Shop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    <a class="navbar-brand" href="{% url 'my_cart' %}">Корзина</a>
+                    <a class="navbar-brand" href="{% url 'list_purchases' %}">Покупки</a>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {% if user.is_authenticated %} 
+                      {{user.username }}
+                      {% else %}
+                      Account
+                      {% endif %}
+                      <ul class="dropdown-menu dropdown-menu-dark">
+                        {% if user.is_authenticated %}
+                        
+                        <li><a class="dropdown-item" href="{% url 'my_cards' %}">Мои карты</a></li>
+
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Выйти</a></li>
+                                                {% else %}
+                        <li><a class="dropdown-item" href="{% url 'login' %}">Войти</a></li>
+                        <li><a class="dropdown-item" href="{% url 'register' %}">Регистрация</a></li>
+                                                {% endif %}
+                    </ul>
+                    </a>
+                </li>
+                {% if request.user.is_superuser %}
+                <a class="navbar-brand" href="{% url 'create_product' %}">Добавить товар</a>
+                {% endif %}
+
+                </ul>
+            </div>
+
+            
+        </nav>
+        <div class="container-fluid"
+        style="display: flex;">
+            {% csrf_token %}
+            {% block content %}
+            {% endblock %}
+
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    </body>
+</html>

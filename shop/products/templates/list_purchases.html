@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static%}
+<div class="container">
+<h1 style="padding: 1rem; font-size: 2.5rem; font-family: sans-serif; font-weight: 900; padding: 2rem 0;">Покупки</h1>
+<ul class="list-group" style="gap: 20px;">
+    {% for cart in purchases %}
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{% static '/' %}{{ cart.product.image_url }}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{cart.product.name}}</h5>
+              <div class="bg-transparent card-header pt-4 border-0" style="position: sticky;">
+                <h3 class="h3 font-weight-normal text-primary text-left mb-0" data-pricing-value="30">$<span class="price">   {{cart.product.price }}
+                </span></h1>
+                {% if cart.product.quantity > 0 %}
+            </div>
+                {% else %}
+                <small class="text-muted red">Нет в наличии</small>
+                {% endif %}
+            
+              <p class="card-text"><small class="text-muted">Количество: {{cart.quantity}}</small></p>
+
+            </div>
+
+            
+          </div>
+        <div> 
+            {% if cart.paid_status == cart.PaidStatus.Paid %}
+            <small class="text-muted red">Оплачено</small>
+            {% endif %}
+        </div>
+
+
+        </div>
+      </div>
+    {% endfor %}
+    <div>
+    </div>
+
+<div class="container" style="margin-top:50px;">
+
+</div>
+    
+</div>
+{% endblock %}

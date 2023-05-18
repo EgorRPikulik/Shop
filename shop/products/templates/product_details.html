@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static%}
+<!--The page for the selected product-->
+<div class="container" >
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
+        <p>
+        <h1>{{ product.name }}</h1>
+        </p>
+        <img src="{% static '/' %}{{ product.image_url }}" alt=".."style="display: block;
+        height: 700px;
+        width: 800px    ;"  >
+        <p>
+        <h4>Описание: {{ product.info|linebreaks }}</h4>
+        </p>
+        <p>
+        <h4>Осталось штук: {{ product.quantity }}</h4>
+        </p>
+
+
+        <p>
+            <b><h4>Price: {{ product.price }}$</h4></b>
+        </p>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'add_to_cart' product.id %}"><button type="button" class="btn btn-outline-warning">В корзину</button></a>
+        {% endif %}
+        
+
+        
+    </div>
+</div>
+{% endblock %}
